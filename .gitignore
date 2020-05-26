@@ -1,0 +1,11 @@
+# System
+Thumbs.db
+.DS_Store
+
+# Vendors
+node_modules/
+
+# Build
+public/js/
+dist/
+*.log
