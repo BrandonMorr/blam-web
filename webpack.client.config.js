@@ -8,9 +8,7 @@ const client      = path.join(__dirname, 'src/client/client');
 module.exports = {
   mode: 'development',
   devtool: 'inline-source-map',
-  entry: {
-    app: client
-  },
+  entry: client,
   output: {
     path: path.join(www, 'js'),
     filename: 'bundle.js',
@@ -33,11 +31,6 @@ module.exports = {
         test: /\.(png|jpg|gif|ico|svg|pvr|pkm|static|ogg|mp3|wav|obj)$/,
         exclude: [ nodeModules, server ],
         use: [ 'file-loader' ]
-      },
-      {
-        test: /\.(vert|frag|glsl|shader|txt)$/,
-        exclude: [ nodeModules, server ],
-        use: [ 'raw-loader' ]
       }
     ]
   }
