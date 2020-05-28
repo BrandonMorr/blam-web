@@ -12,7 +12,7 @@ app.use('/public', Express.static(Path.join(__dirname, '../public')));
 // When a request is made from the server, deliver the client.
 app.get('/', function(request, response) {
   response.sendFile(Path.join(__dirname, '../public/index.html'));
-})
+});
 
 // Tell server to start listening for connections.
 server.listen(port, () => {

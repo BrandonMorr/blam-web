@@ -16,22 +16,28 @@ module.exports = {
     filename: 'bundle.js',
     publicPath: '/'
   },
+  optimization: {
+    splitChunks: {
+      name: 'vendor',
+      chunks: 'all'
+    }
+  },
   module: {
     rules: [
       {
         test: /\.js$/,
-        use: 'babel-loader',
-        exclude: [ nodeModules, server ]
+        exclude: [ nodeModules, server ],
+        use: [ 'babel-loader' ]
       },
       {
-        test: /\.(png|jpg|gif|ico|svg|pvr|pkm|static|ogg|mp3|wav)$/,
-        use: 'file-loader',
-        exclude: [ nodeModules, server ]
+        test: /\.(png|jpg|gif|ico|svg|pvr|pkm|static|ogg|mp3|wav|obj)$/,
+        exclude: [ nodeModules, server ],
+        use: [ 'file-loader' ]
       },
       {
         test: /\.(vert|frag|glsl|shader|txt)$/,
-        use: 'raw-loader',
-        exclude: [ nodeModules, server ]
+        exclude: [ nodeModules, server ],
+        use: [ 'raw-loader' ]
       }
     ]
   }
