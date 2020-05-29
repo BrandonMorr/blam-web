@@ -177,7 +177,7 @@
     ],
     "images": [
         {
-            "uri": "Duck.png"
+            "uri": "duck.png"
         }
     ],
     "samplers": [
@@ -213,7 +213,7 @@
     "buffers": [
         {
             "byteLength": 102040,
-            "uri": "Duck.bin"
+            "uri": "duck.bin"
         }
     ]
 }
