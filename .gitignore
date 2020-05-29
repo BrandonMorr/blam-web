@@ -7,5 +7,4 @@ node_modules/
 
 # Build
 public/js/
-dist/
 *.log

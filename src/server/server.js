@@ -1,20 +1,31 @@
-import Path from 'path';
-import Http from 'http';
-import Express from 'express';
+const path = require('path')
+const http = require('http')
+const express = require('express')
+const geckos = require('@geckos.io/server').default
 
-const app = Express();
-const server = Http.Server(app);
-const port = process.env.PORT || 3000;
+const io = geckos()
+const app = express()
+const server = http.Server(app)
+const port = process.env.port || 3000
 
-// Add static file middleware (to serve static files).
-app.use('/public', Express.static(Path.join(__dirname, '../public')));
+io.addServer(server)
 
-// When a request is made from the server, deliver the client.
+io.onConnection((client) => {
+  console.log(`${client.id} has connected`)
+
+  client.emit('player connected');
+
+  client.onDisconnect(() => {
+    console.log(`${client.id} got disconnected`)
+  })
+})
+
+app.use('/', express.static(path.join(__dirname, '../../public')))
+
 app.get('/', function(request, response) {
-  response.sendFile(Path.join(__dirname, '../public/index.html'));
-});
+  response.sendFile(path.join(__dirname, '../../public/index.html'))
+})
 
-// Tell server to start listening for connections.
 server.listen(port, () => {
-  console.log('\n🌏 server init complete, listening for connections on port ' + port + ' 🌏\n');
-});
+  console.log('\n🌏 server init complete, listening for connections on port ' + port + ' 🌏\n')
+})

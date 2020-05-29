@@ -11,7 +11,7 @@ export default class Duck extends Group {
 
     this.name = 'duck';
 
-    new GLTFLoader().load('public/assets/models/duck/duck.gltf', (gltf) => {
+    new GLTFLoader().load('assets/models/duck/duck.gltf', (gltf) => {
       this.add(gltf.scene);
     });
   }

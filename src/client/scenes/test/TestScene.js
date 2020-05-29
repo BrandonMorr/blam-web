@@ -1,8 +1,8 @@
-import { Group, Clock } from 'three';
+import { Group, Clock, PlaneGeometry, MeshBasicMaterial, Mesh } from 'three';
 import Duck from './duck/Duck';
 
 /**
- * @class - Test Scene which displays a ton of randomly placed rubber duckies.
+ * @class - Test Scene which once upon a time displayed a bunch of ducks.
  */
 export default class TestScene extends Group {
 
@@ -11,31 +11,21 @@ export default class TestScene extends Group {
 
     this.clock = new Clock();
 
-    this.ducks = [];
+    const floorGeometry = new PlaneGeometry(50, 50);
+    const floorMaterial = new MeshBasicMaterial({ color: 0xffff00 });
+    const floorMesh = new Mesh(floorGeometry, floorMaterial);
+    floorMesh.rotateX(-Math.PI / 2);
+    floorMesh.position.set(0, -1, 0);
 
-    for (let i = 0; i <= 250; i++) {
-      const duck = new Duck();
-      duck.position.set(
-        this.getRandomFloatRange(-25, 25),
-        this.getRandomFloatRange(-25, 25),
-        this.getRandomFloatRange(-25, 25)
-      );
+    const duck = new Duck();
+    duck.position.set(0, 0, -5);
 
-      this.add(duck);
-      this.ducks.push(duck);
-    }
+    this.add(floorMesh, duck);
   }
 
   update() {
     const delta = this.clock.getDelta();
 
-    for (let duck of this.ducks) {
-      duck.rotation.x += 1 * delta;
-      duck.rotation.z += 1 * delta;
-    }
-  }
-
-  getRandomFloatRange(min, max) {
-    return Math.random() * (max - min) + min;
+    // Update...
   }
 }
