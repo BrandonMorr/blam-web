@@ -1,5 +1,5 @@
-import { Group, Clock, PlaneGeometry, MeshBasicMaterial, Mesh } from 'three';
-import Duck from './duck/Duck';
+import { Group, Clock, PlaneGeometry, MeshBasicMaterial, Mesh } from 'three'
+import Duck from './duck/Duck'
 
 /**
  * @class - Test Scene which once upon a time displayed a bunch of ducks.
@@ -7,25 +7,25 @@ import Duck from './duck/Duck';
 export default class TestScene extends Group {
 
   constructor() {
-    super();
+    super()
 
-    this.clock = new Clock();
+    this.clock = new Clock()
 
-    const floorGeometry = new PlaneGeometry(50, 50);
-    const floorMaterial = new MeshBasicMaterial({ color: 0xffff00 });
-    const floorMesh = new Mesh(floorGeometry, floorMaterial);
-    floorMesh.rotateX(-Math.PI / 2);
-    floorMesh.position.set(0, -1, 0);
+    const floorGeometry = new PlaneGeometry(50, 50)
+    const floorMaterial = new MeshBasicMaterial({ color: 0xffff00 })
+    this.floorMesh = new Mesh(floorGeometry, floorMaterial)
+    this.floorMesh.rotateX(-Math.PI / 2)
+    this.floorMesh.position.set(0, -1, 0)
 
-    const duck = new Duck();
-    duck.position.set(0, 0, -5);
+    this.duck = new Duck()
 
-    this.add(floorMesh, duck);
+    this.add(this.floorMesh, this.duck)
   }
 
   update() {
-    const delta = this.clock.getDelta();
+    const delta = this.clock.getDelta()
 
-    // Update...
+    this.duck.rotation.y += 1 * delta;
+    this.duck.position.y = Math.sin(performance.now() * 0.001) * Math.PI * 0.1;
   }
 }

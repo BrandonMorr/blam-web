@@ -1,5 +1,5 @@
-import { Group } from 'three';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import { Group } from 'three'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 
 /**
  * @class - Duck class which loads GLTF model and add's it to a group.
@@ -7,12 +7,10 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 export default class Duck extends Group {
 
   constructor() {
-    super();
-
-    this.name = 'duck';
+    super()
 
     new GLTFLoader().load('assets/models/duck/duck.gltf', (gltf) => {
-      this.add(gltf.scene);
-    });
+      this.add(gltf.scene)
+    })
   }
 }

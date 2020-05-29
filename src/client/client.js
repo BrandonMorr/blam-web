@@ -1,61 +1,64 @@
-import * as THREE from 'three';
-import TestScene from './scenes/test/TestScene';
-import FPSController from './input/PlayerController';
-import Geckos from '@geckos.io/client';
+import * as THREE from 'three'
 
-const channel = new Geckos({ port: 3000 });
+import Geckos from '@geckos.io/client'
+import TestScene from './scenes/test/TestScene'
+import FPSController from './input/PlayerController'
 
-// once the channel is connected to the server
+const channel = new Geckos()
+
 channel.onConnect(error => {
+	console.log('connected')
+
 	if (error) {
-    console.error(error.message);
-    return;
+    console.error(error.message)
+    return
   }
 
-	channel.on('player connected', () => {
-		console.log('yo');
-	});
+	channel.on('message', (message) => {
+		console.log(message)
+	})
 
   channel.onDisconnect(() => {
-		console.log('someone disconnected');
-	});
-});
+		console.log('someone disconnected')
+	})
+})
 
-const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x000000);
+const scene = new THREE.Scene()
+scene.background = new THREE.Color(0x000000)
 
-const testScene = new TestScene();
-scene.add(testScene);
+const testScene = new TestScene()
+scene.add(testScene)
 
-const light = new THREE.HemisphereLight(0xffffbb, 0x777788, 1);
-light.position.set(0, 1, 1);
-scene.add(light);
+const hemisphereLight = new THREE.HemisphereLight(0xffffff, 0x777788, 1)
+hemisphereLight.position.set(0, 1, 1)
+scene.add(hemisphereLight)
 
-const renderer = new THREE.WebGLRenderer();
-renderer.antialias = true;
-renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setPixelRatio(window.devicePixelRatio);
+const renderer = new THREE.WebGLRenderer()
+renderer.antialias = true
+renderer.setSize(window.innerWidth, window.innerHeight)
+renderer.setPixelRatio(window.devicePixelRatio)
 
-document.body.appendChild(renderer.domElement);
+document.body.appendChild(renderer.domElement)
 
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
+camera.position.set(0, 0, 5)
 
-const controller = new FPSController(camera);
+const controller = new FPSController(camera)
 
 window.addEventListener('resize', () => {
-	renderer.setSize(window.innerWidth, window.innerHeight);
+	renderer.setSize(window.innerWidth, window.innerHeight)
 
-	camera.aspect = window.innerWidth / window.innerHeight;
-	camera.updateProjectionMatrix();
-});
+	camera.aspect = window.innerWidth / window.innerHeight
+	camera.updateProjectionMatrix()
+})
 
 function animate() {
-	requestAnimationFrame(animate);
+	requestAnimationFrame(animate)
 
-	controller.update();
-	testScene.update();
+	controller.update()
+	testScene.update()
 
-	renderer.render(scene, camera);
+	renderer.render(scene, camera)
 }
 
-animate();
+animate()
