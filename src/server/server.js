@@ -1,33 +1,22 @@
-const path = require('path')
-const http = require('http')
-const express = require('express')
-const geckos = require('@geckos.io/server').default
+import path from 'path'
+import http from 'http'
+import express from 'express'
 
-const port = 3000
+import Game from './game/game'
 
-const io = geckos()
 const app = express()
-const server = http.Server(app)
+const server = http.createServer(app)
 
-// io.addServer(server)
-io.listen()
+const port = process.env.port || 3000
 
-app.use('/', express.static(path.join(__dirname, '../../public')))
+app.use('/', express.static(path.join(__dirname, '../public')))
 
 app.get('/', (request, response) => {
-  response.sendFile(path.join(__dirname, '../../public/index.html'))
+  response.sendFile(path.join(__dirname, '../public/index.html'))
 })
 
 server.listen(port, () => {
   console.log('\n🌏 server init complete, listening for connections on port ' + port + ' 🌏\n')
-
-  io.onConnection(channel => {
-    console.log(`${channel.id} has connected`)
-
-    channel.onDisconnect(() => {
-      console.log(`${channel.id} has disconnected`)
-    })
-
-    channel.emit('message', 'welcome...')
-  })
 })
+
+new Game(server)

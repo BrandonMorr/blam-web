@@ -1,13 +1,12 @@
-import { Vector3, Clock } from 'three'
+import { Vector3 } from 'three'
 import { PointerLockControls } from 'three/examples/jsm/controls/PointerLockControls'
 
 /**
- * @class - PlayerController class handles player input.
+ * @class - FPS controller, WIP.
  */
-export default class PlayerController {
+export class FPSController {
 
   constructor(camera) {
-    this.clock = new Clock()
     this.controls = new PointerLockControls(camera, document.body)
 
     this.camera = camera
@@ -102,10 +101,8 @@ export default class PlayerController {
     document.body.addEventListener('click', () => { this.controls.lock() })
   }
 
-  update() {
+  update(delta) {
     if (this.controls.isLocked === true) {
-      const delta = this.clock.getDelta()
-
       this.velocity.x -= this.velocity.x * 10 * delta
       this.velocity.z -= this.velocity.z * 10 * delta
       this.velocity.y -= 9.81 * this.mass * delta

@@ -1,4 +1,5 @@
-const path        = require('path')
+const path = require('path')
+
 const server      = path.join(__dirname, 'src/server')
 const nodeModules = path.join(__dirname, 'node_modules')
 const client      = path.join(__dirname, 'src/client/client')
