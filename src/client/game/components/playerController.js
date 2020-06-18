@@ -1,6 +1,6 @@
 import { Group, Vector3, Euler } from 'three'
 import InputManager from './inputManager'
-import MovementManager from './MovementManager'
+import MovementManager from './movementManager'
 
 /**
  * @class - WIP Player Controller.
