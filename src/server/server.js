@@ -7,7 +7,7 @@ import Game from './game/game'
 const app = express()
 const server = http.createServer(app)
 
-const port = process.env.port || 3000
+const port = process.env.PORT || 3000
 
 app.use('/', express.static(path.join(__dirname, '../public')))
 
