@@ -6,4 +6,8 @@ export default class Player {
   update() {
     // player update...
   }
+
+  postUpdate() {
+    // state buffer...
+  }
 }

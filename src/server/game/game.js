@@ -1,5 +1,7 @@
 import geckos from '@geckos.io/server'
 
+import Player from './components/player'
+
 export default class Game {
 
   constructor(server) {
@@ -8,14 +10,24 @@ export default class Game {
     this.io = geckos()
     this.io.addServer(server)
 
-    this.io.onConnection(channel => {
-      console.log(`${channel.id} connected`)
+    this.players = []
 
+    this.io.onConnection(channel => {
       channel.onDisconnect(() => {
         console.log(`${channel.id} disconnected`)
+
+        channel.emit('remove player', channel.id)
       })
 
-      this.io.emit('welcome')
+      this.players.push({
+        id: channel.id
+      })
+
+      channel.on('add player', () => {
+        this.players.push(new Player(channel.id))
+
+        channel.broadcast.emit('add player')
+      })
     })
 
     this.update()

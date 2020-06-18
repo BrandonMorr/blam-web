@@ -1,10 +1,9 @@
 import { Group, PlaneGeometry, MeshBasicMaterial, Mesh } from 'three'
-import Duck from './duck/duck'
 
 /**
  * @class - Test Scene which once upon a time displayed a bunch of ducks.
  */
-export default class TestScene extends Group {
+export default class Room extends Group {
 
   constructor() {
     super()
@@ -16,13 +15,10 @@ export default class TestScene extends Group {
     this.floorMesh.rotateX(-Math.PI / 2)
     this.floorMesh.position.set(0, -1, 0)
 
-    this.duck = new Duck()
-
-    this.add(this.floorMesh, this.duck)
+    this.add(this.floorMesh)
   }
 
   update(delta) {
-    this.duck.rotation.y += 1 * delta;
-    this.duck.position.y = Math.sin(performance.now() * 0.001) * Math.PI * 0.1;
+    this.floorMesh.rotation.z += 0.1 * delta;
   }
 }

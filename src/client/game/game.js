@@ -1,31 +1,36 @@
 import * as THREE from 'three'
-import TestScene from './scenes/test/testScene'
-import { FPSController } from './components/input/playerController'
+import Room from './scenes/room'
+import PlayerController from './components/playerController'
+import AssetManager from './util/assetManager'
 
 import geckos from '@geckos.io/client'
 
 export default class Game {
 
   constructor() {
+    this.players = []
+
     this.channel = geckos({ port: 3000 })
 
     this.channel.onConnect(error => {
-      if (error) console.error(error.message)
+      if (error) {
+        console.error(error.message)
+        return
+      }
 
-      this.channel.on('welcome', () => { console.log('welcome!') })
+      this.channel.emit('add player')
     })
 
     this.scene = new THREE.Scene()
     this.scene.background = new THREE.Color(0x000000)
 
-    this.hemisphereLight = new THREE.HemisphereLight(0xffffff, 0x777788, 1)
-    this.hemisphereLight.position.set(0, 1, 0)
-    this.scene.add(this.hemisphereLight)
+    const light = new THREE.HemisphereLight(0xffffff, 0x777788, 1)
+    light.position.set(0, 2, 0)
+    this.scene.add(light)
 
     this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
-    this.camera.position.set(0, 0, 5)
 
-    this.controller = new FPSController(this.camera)
+    this.controller = new PlayerController(this.camera)
 
     this.renderer = new THREE.WebGLRenderer({ antialiasing: true })
     this.renderer.setSize(window.innerWidth, window.innerHeight)
@@ -33,10 +38,15 @@ export default class Game {
 
     document.body.appendChild(this.renderer.domElement)
 
-    window.addEventListener('resize', () => { this.onWindowResize()}, false)
+    window.addEventListener('resize', () => { this.onWindowResize() }, false)
 
-    this.testScene = new TestScene()
-    this.scene.add(this.testScene)
+    this.room = new Room()
+    this.scene.add(this.room)
+
+    const loadingManager = new THREE.LoadingManager()
+
+    this.assetManager = new AssetManager(loadingManager)
+    this.assetManager.loadModel('player', 'assets/models/duck/duck.gltf')
 
     this.clock = new THREE.Clock()
 
@@ -44,12 +54,14 @@ export default class Game {
   }
 
   update() {
-    requestAnimationFrame(() => { this.update() })
+    const delta = this.clock.getDelta()
 
-    this.controller.update(this.clock.getDelta())
-    this.testScene.update(this.clock.getDelta())
+    this.controller.update(delta)
+    this.room.update(delta)
 
     this.render()
+
+    requestAnimationFrame(() => { this.update() })
   }
 
   render() {
