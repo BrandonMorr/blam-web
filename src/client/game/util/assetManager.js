@@ -13,7 +13,7 @@ export default class AssetManager {
   }
 
   /**
-   * Loads a GLTF model and store in the manager's model Map.
+   * Loads a GLTF model and is stored in the manager's model Map.
    *
    * @param { String } name - The model's name identifier.
    * @param { String } url - The model's URL on the public file system.

@@ -20,10 +20,12 @@
   },
   "homepage": "https://github.com/BrandonMorr/blam#readme",
   "dependencies": {
+    "@enable3d/phaser-extension": "^0.19.1",
     "@geckos.io/client": "^1.4.2",
     "@geckos.io/server": "^1.4.2",
+    "enable3d": "^0.19.1",
     "express": "^4.17.1",
-    "three": "^0.117.1"
+    "phaser": "^3.23.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",
