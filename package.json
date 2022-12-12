@@ -24,7 +24,7 @@
     "@geckos.io/client": "^1.4.2",
     "@geckos.io/server": "^1.4.2",
     "enable3d": "^0.19.1",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "phaser": "^3.23.0"
   },
   "devDependencies": {
